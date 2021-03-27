@@ -1,6 +1,5 @@
 package com.github.secretx33.savecoords.commands;
 
-import com.github.secretx33.savecoords.model.Coordinate;
 import com.github.secretx33.savecoords.repository.CoordRepo;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

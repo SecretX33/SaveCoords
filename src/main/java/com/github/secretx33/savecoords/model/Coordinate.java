@@ -18,6 +18,10 @@ public class Coordinate {
     private final int z;
 
     public Coordinate(String name, String description, String world, int x, int y, int z) {
+        checkNotNull(name, "name cannot be null");
+        checkNotNull(description, "description cannot be null");
+        checkNotNull(world, "world cannot be null");
+
         this.name = name;
         this.description = description;
         this.world = world;
@@ -27,6 +31,9 @@ public class Coordinate {
     }
 
     public Coordinate(String name, String description, Location location) {
+        checkNotNull(name, "name cannot be null");
+        checkNotNull(description, "description cannot be null");
+        checkNotNull(location, "location cannot be null");
         checkNotNull(location.getWorld(), "location cannot have world attribute null");
         checkNotNull(location.getWorld().getName(), "world name cannot be null");
 

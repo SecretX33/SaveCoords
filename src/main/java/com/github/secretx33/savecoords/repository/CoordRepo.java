@@ -9,9 +9,10 @@ import org.bukkit.entity.Player;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @ParametersAreNonnullByDefault
 public class CoordRepo {
@@ -20,6 +21,7 @@ public class CoordRepo {
     private final File coordFile;
 
     public CoordRepo(File coordinatesFile) {
+        checkNotNull(coordinatesFile);
         this.coordFile = coordinatesFile;
         coords = FileUtils.load(coordinatesFile);
     }
