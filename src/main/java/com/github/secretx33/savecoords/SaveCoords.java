@@ -11,7 +11,7 @@ public class SaveCoords extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        File coordinatesFile = new File(getDataFolder() + File.separator + "coordinates.json");
+        File coordinatesFile = new File(getDataFolder(), "coordinates.json");
         CoordRepo coordRepo = new CoordRepo(coordinatesFile);
         new AddCommand(this, coordRepo);
         new RemoveCommand(this, coordRepo);

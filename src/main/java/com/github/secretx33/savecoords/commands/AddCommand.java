@@ -68,7 +68,7 @@ public class AddCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] strings) {
         if(!(sender instanceof Player)) return new ArrayList<>();
-        
+
         if(strings.length == 1) return Collections.singletonList("<name>");
         if(strings.length == 2) return Collections.singletonList("<description>");
         return new ArrayList<>();
