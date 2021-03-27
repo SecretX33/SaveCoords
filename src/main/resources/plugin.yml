@@ -1,0 +1,19 @@
+name: ${name}
+version: ${version}
+main: com.github.secretx33.savecoords.SaveCoords
+api-version: 1.16
+authors: [SecretX]
+description: Save player coords to file
+website: https://github.com/SecretX33
+
+commands:
+
+  addcoords:
+    description: ${name}
+    usage: /<command>
+    aliases: [ac, addcoord, addcoordinate, addcoordinates]
+
+  removecoords:
+    description: ${name}
+    usage: /<command>
+    aliases: [rc, removecoordinates, dc, delcoord, delcoords]
