@@ -30,12 +30,12 @@ public class AddCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String alias, String[] strings) {
-        if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage("You may only add coordinates while logged in.");
+    public boolean onCommand(CommandSender sender, Command command, String alias, String[] strings) {
+        if(!(sender instanceof Player)) {
+            sender.sendMessage("You may only add coordinates while logged in.");
             return true;
         }
-        Player player = (Player) commandSender;
+        Player player = (Player) sender;
 
         if(strings == null || strings.length < 2) {
             player.sendMessage(ChatColor.RED + "Usage: /" + alias + " <name> <description>");
@@ -66,7 +66,9 @@ public class AddCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender commandSender, Command command, String alias, String[] strings) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] strings) {
+        if(!(sender instanceof Player)) return new ArrayList<>();
+        
         if(strings.length == 1) return Collections.singletonList("<name>");
         if(strings.length == 2) return Collections.singletonList("<description>");
         return new ArrayList<>();
