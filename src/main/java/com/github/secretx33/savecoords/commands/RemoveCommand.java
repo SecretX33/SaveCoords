@@ -30,15 +30,15 @@ public class RemoveCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if(!(commandSender instanceof Player)) {
-            commandSender.sendMessage("You may only add coordinates while logged in.");
+    public boolean onCommand(CommandSender sender, Command command, String alias, String[] strings) {
+        if(!(sender instanceof Player)) {
+            sender.sendMessage("You may only add coordinates while logged in.");
             return true;
         }
-        Player player = (Player) commandSender;
+        Player player = (Player) sender;
 
-        if(strings == null || strings.length < 1) {
-            player.sendMessage(ChatColor.RED + "Usage: /" + s + " <name>");
+        if(strings == null || strings.length == 0) {
+            player.sendMessage(ChatColor.RED + "Usage: /" + alias + " <name>");
             return true;
         }
 
@@ -54,10 +54,9 @@ public class RemoveCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] strings) {
-        if(!(sender instanceof Player)) {
-            return new ArrayList<>();
-        }
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] strings) {
+        if(!(sender instanceof Player)) return new ArrayList<>();
+
         if(strings.length == 1) {
             List<String> coordinates = coordRepo.getAllOf((Player) sender);
             if(coordinates.size() > 0) return coordinates;
