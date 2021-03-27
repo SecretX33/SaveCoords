@@ -2,7 +2,7 @@ package com.github.secretx33.savecoords.repository;
 
 import com.github.secretx33.savecoords.model.Coordinate;
 import com.github.secretx33.savecoords.utils.FileUtils;
-import com.google.common.collect.ListMultimap;
+import com.google.common.collect.SetMultimap;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @ParametersAreNonnullByDefault
 public class CoordRepo {
 
-    private final ListMultimap<String, Coordinate> coords;
+    private final SetMultimap<String, Coordinate> coords;
     private final File coordFile;
 
     public CoordRepo(File coordinatesFile) {
@@ -43,7 +43,6 @@ public class CoordRepo {
         if(!coords.containsKey(player.getName())) return;
 
         if(coords.get(player.getName()).removeIf(coord -> coord.getName().equalsIgnoreCase(coordinateName))) {
-            System.out.println("Deleting " + coordinateName);
             FileUtils.save(coordFile, coords);
         }
     }

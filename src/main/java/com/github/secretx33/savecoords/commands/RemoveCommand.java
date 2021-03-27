@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.StringUtil;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
@@ -58,7 +59,12 @@ public class RemoveCommand implements CommandExecutor, TabCompleter {
 
         if(strings.length == 1) {
             List<String> coordinates = coordRepo.getAllOf((Player) sender);
-            if(coordinates.size() > 0) return coordinates;
+
+            if(coordinates.size() > 0) {
+                List<String> filteredList = StringUtil.copyPartialMatches(strings[strings.length -1], coordinates, new ArrayList<>());
+                Collections.sort(filteredList);
+                return filteredList;
+            }
             return Collections.singletonList("<name>");
         }
         return new ArrayList<>();
