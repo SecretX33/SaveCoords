@@ -23,8 +23,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @ParametersAreNonnullByDefault
 public class FileUtils {
 
-    private static Type mapToken = new TypeToken<Map<String, Collection<Coordinate>>>() {}.getType();
-    private static Gson gson = new GsonBuilder()
+    private static final Type mapToken = new TypeToken<Map<String, Collection<Coordinate>>>() {}.getType();
+    private static final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .enableComplexMapKeySerialization()
             .create();

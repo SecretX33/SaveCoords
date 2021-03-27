@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @ParametersAreNonnullByDefault
 public class CoordRepo {
 
-    private ListMultimap<String, Coordinate> coords;
-    private File coordFile;
+    private final ListMultimap<String, Coordinate> coords;
+    private final File coordFile;
 
     public CoordRepo(File coordinatesFile) {
         this.coordFile = coordinatesFile;

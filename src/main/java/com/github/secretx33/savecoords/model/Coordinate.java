@@ -10,12 +10,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @ParametersAreNonnullByDefault
 public class Coordinate {
 
-    private String name;
-    private String description;
-    private String world;
-    private int x;
-    private int y;
-    private int z;
+    private final String name;
+    private final String description;
+    private final String world;
+    private final int x;
+    private final int y;
+    private final int z;
 
     public Coordinate(String name, String description, String world, int x, int y, int z) {
         this.name = name;
