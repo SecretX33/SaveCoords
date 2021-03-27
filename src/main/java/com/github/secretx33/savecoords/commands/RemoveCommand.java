@@ -32,7 +32,7 @@ public class RemoveCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] strings) {
         if(!(sender instanceof Player)) {
-            sender.sendMessage("You may only add coordinates while logged in.");
+            sender.sendMessage("You may only remove coordinates while logged in.");
             return true;
         }
         Player player = (Player) sender;
