@@ -35,7 +35,6 @@ public class Coordinate {
         checkNotNull(description, "description cannot be null");
         checkNotNull(location, "location cannot be null");
         checkNotNull(location.getWorld(), "location cannot have world attribute null");
-        checkNotNull(location.getWorld().getName(), "world name cannot be null");
 
         this.name = name;
         this.description = description;
@@ -83,12 +82,11 @@ public class Coordinate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coordinate that = (Coordinate) o;
-        return name.equalsIgnoreCase(that.name)
-                || x == that.x && y == that.y && z == that.z && world.equalsIgnoreCase(that.world);
+        return x == that.x && y == that.y && z == that.z && name.equalsIgnoreCase(that.name) && world.equalsIgnoreCase(that.world);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, world, x, y, z);
+        return Objects.hash(world, x, y, z);
     }
 }

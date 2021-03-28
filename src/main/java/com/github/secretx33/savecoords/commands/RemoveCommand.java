@@ -55,18 +55,15 @@ public class RemoveCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] strings) {
-        if(!(sender instanceof Player)) return new ArrayList<>();
+        if(!(sender instanceof Player) || strings.length != 1)
+            return new ArrayList<>();
 
-        if(strings.length == 1) {
-            List<String> coordinates = coordRepo.getAllOf((Player) sender);
-
-            if(coordinates.size() > 0) {
-                List<String> filteredList = StringUtil.copyPartialMatches(strings[strings.length -1], coordinates, new ArrayList<>());
-                Collections.sort(filteredList);
-                return filteredList;
-            }
-            return Collections.singletonList("<name>");
+        List<String> coordinates = coordRepo.getAllOf((Player) sender);
+        if(coordinates.size() > 0) {
+            List<String> filteredList = StringUtil.copyPartialMatches(strings[strings.length -1], coordinates, new ArrayList<>());
+            Collections.sort(filteredList);
+            return filteredList;
         }
-        return new ArrayList<>();
+        return Collections.singletonList("<name>");
     }
 }

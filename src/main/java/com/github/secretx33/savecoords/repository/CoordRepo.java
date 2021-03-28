@@ -23,7 +23,7 @@ public class CoordRepo {
     public CoordRepo(File coordinatesFile) {
         checkNotNull(coordinatesFile);
         this.coordFile = coordinatesFile;
-        coords = FileUtils.load(coordinatesFile);
+        this.coords = FileUtils.load(coordinatesFile);
     }
 
     public boolean hasCoord(Player player, Location location) {

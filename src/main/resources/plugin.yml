@@ -10,10 +10,10 @@ commands:
 
   addcoords:
     description: ${name}
-    usage: /<command>
+    usage: /<command> <name> <description>
     aliases: [ac, addcoord, addcoordinate, addcoordinates]
 
   removecoords:
     description: ${name}
-    usage: /<command>
+    usage: /<command> <name>
     aliases: [rc, removecoordinates, dc, delcoord, delcoords]
