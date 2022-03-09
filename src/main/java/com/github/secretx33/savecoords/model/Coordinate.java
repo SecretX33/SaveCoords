@@ -1,13 +1,12 @@
 package com.github.secretx33.savecoords.model;
 
 import org.bukkit.Location;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@ParametersAreNonnullByDefault
 public class Coordinate {
 
     private final String name;
@@ -16,19 +15,6 @@ public class Coordinate {
     private final int x;
     private final int y;
     private final int z;
-
-    public Coordinate(String name, String description, String world, int x, int y, int z) {
-        checkNotNull(name, "name cannot be null");
-        checkNotNull(description, "description cannot be null");
-        checkNotNull(world, "world cannot be null");
-
-        this.name = name;
-        this.description = description;
-        this.world = world;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
 
     public Coordinate(String name, String description, Location location) {
         checkNotNull(name, "name cannot be null");
@@ -42,6 +28,19 @@ public class Coordinate {
         this.x = location.getBlockX();
         this.y = location.getBlockY();
         this.z = location.getBlockZ();
+    }
+
+    public Coordinate(String name, String description, String world, int x, int y, int z) {
+        checkNotNull(name, "name cannot be null");
+        checkNotNull(description, "description cannot be null");
+        checkNotNull(world, "world cannot be null");
+
+        this.name = name;
+        this.description = description;
+        this.world = world;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public String getName() {
@@ -68,8 +67,8 @@ public class Coordinate {
         return z;
     }
 
-    public boolean isAt(Location location) {
-        if(location.getWorld() == null) return false;
+    public boolean isAt(@Nullable Location location) {
+        if (location == null || location.getWorld() == null) return false;
 
         return location.getBlockX() == x
                 && location.getBlockY() == y
@@ -82,7 +81,11 @@ public class Coordinate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coordinate that = (Coordinate) o;
-        return x == that.x && y == that.y && z == that.z && name.equalsIgnoreCase(that.name) && world.equalsIgnoreCase(that.world);
+        return x == that.x
+                && y == that.y
+                && z == that.z
+                && name.equalsIgnoreCase(that.name)
+                && world.equalsIgnoreCase(that.world);
     }
 
     @Override

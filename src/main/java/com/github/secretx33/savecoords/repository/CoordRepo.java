@@ -6,23 +6,20 @@ import com.google.common.collect.SetMultimap;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@ParametersAreNonnullByDefault
 public class CoordRepo {
 
     private final SetMultimap<String, Coordinate> coords;
     private final File coordFile;
 
     public CoordRepo(File coordinatesFile) {
-        checkNotNull(coordinatesFile);
-        this.coordFile = coordinatesFile;
+        this.coordFile = checkNotNull(coordinatesFile);
         this.coords = FileUtils.load(coordinatesFile);
     }
 
@@ -40,15 +37,18 @@ public class CoordRepo {
     }
 
     public synchronized void removeCoord(Player player, String coordinateName) {
-        if(!coords.containsKey(player.getName())) return;
-
-        if(coords.get(player.getName()).removeIf(coord -> coord.getName().equalsIgnoreCase(coordinateName))) {
-            FileUtils.save(coordFile, coords);
-        }
+        Set<Coordinate> playerCoords = coords.get(player.getName());
+        boolean removed = playerCoords.removeIf(coord -> coord.getName().equalsIgnoreCase(coordinateName));
+        if (removed) FileUtils.save(coordFile, coords);
     }
 
-    public List<String> getAllOf(Player player) {
-        if(!coords.containsKey(player.getName())) return new ArrayList<>();
-        return coords.get(player.getName()).stream().map(Coordinate::getName).collect(Collectors.toList());
+    public Set<Coordinate> getAllOf(Player player) {
+        return coords.get(player.getName());
+    }
+
+    public List<String> getNamesOfAll(Player player) {
+        return getAllOf(player).stream()
+                .map(Coordinate::getName)
+                .collect(Collectors.toList());
     }
 }

@@ -10,40 +10,36 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.StringUtil;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@ParametersAreNonnullByDefault
 public class RemoveCommand implements CommandExecutor, TabCompleter {
 
     private final CoordRepo coordRepo;
 
     public RemoveCommand(JavaPlugin plugin, CoordRepo coordRepo) {
-        checkNotNull(plugin);
-        checkNotNull(coordRepo);
-        this.coordRepo = coordRepo;
+        this.coordRepo = checkNotNull(coordRepo);
         plugin.getCommand("removecoords").setExecutor(this);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] strings) {
-        if(!(sender instanceof Player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("You may only remove coordinates while logged in.");
             return true;
         }
         Player player = (Player) sender;
 
-        if(strings == null || strings.length == 0) {
+        if (strings.length == 0) {
             player.sendMessage(ChatColor.RED + "Usage: /" + alias + " <name>");
             return true;
         }
 
         String coordName = strings[0];
-        if(!coordRepo.hasCoord(player, coordName)) {
+        if (!coordRepo.hasCoord(player, coordName)) {
             player.sendMessage(ChatColor.RED + "Coordinate with name " + coordName + " doesn't exist.");
             return true;
         }
@@ -55,11 +51,11 @@ public class RemoveCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] strings) {
-        if(!(sender instanceof Player) || strings.length != 1)
-            return new ArrayList<>();
+        if (!(sender instanceof Player) || strings.length != 1)
+            return Collections.emptyList();
 
-        List<String> coordinates = coordRepo.getAllOf((Player) sender);
-        if(coordinates.size() > 0) {
+        List<String> coordinates = coordRepo.getNamesOfAll((Player) sender);
+        if (coordinates.size() > 0) {
             List<String> filteredList = StringUtil.copyPartialMatches(strings[strings.length -1], coordinates, new ArrayList<>());
             Collections.sort(filteredList);
             return filteredList;

@@ -1,6 +1,6 @@
 name: ${name}
 version: ${version}
-main: com.github.secretx33.savecoords.SaveCoords
+main: ${mainClass}
 api-version: 1.16
 authors: [SecretX]
 description: Save player coords to file
@@ -17,3 +17,8 @@ commands:
     description: ${name}
     usage: /<command> <name>
     aliases: [rc, removecoordinates, dc, delcoord, delcoords]
+
+  listcoords:
+    description: ${name}
+    usage: /<command> <name>
+    aliases: [lc, listcoord, listcoordinates]

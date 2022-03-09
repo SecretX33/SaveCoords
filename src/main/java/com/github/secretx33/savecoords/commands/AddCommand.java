@@ -10,34 +10,29 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@ParametersAreNonnullByDefault
 public class AddCommand implements CommandExecutor, TabCompleter {
 
     private final CoordRepo coordRepo;
 
     public AddCommand(JavaPlugin plugin, CoordRepo coordRepo) {
-        checkNotNull(plugin);
-        checkNotNull(coordRepo);
-        this.coordRepo = coordRepo;
+        this.coordRepo = checkNotNull(coordRepo);;
         plugin.getCommand("addcoords").setExecutor(this);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] strings) {
-        if(!(sender instanceof Player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage("You may only add coordinates while logged in.");
             return true;
         }
         Player player = (Player) sender;
 
-        if(strings == null || strings.length < 2) {
+        if (strings.length < 2) {
             player.sendMessage(ChatColor.RED + "Usage: /" + alias + " <name> <description>");
             return true;
         }
@@ -46,16 +41,16 @@ public class AddCommand implements CommandExecutor, TabCompleter {
         StringBuilder sb = new StringBuilder();
         for(int i=1; i < strings.length; i++){
             sb.append(strings[i]);
-            if(i + 1 < strings.length) sb.append(" ");
+            if (i + 1 < strings.length) sb.append(" ");
         }
         Coordinate coordinate = new Coordinate(name, sb.toString(), player.getLocation());
 
-        if(coordRepo.hasCoord(player, coordinate.getName())) {
+        if (coordRepo.hasCoord(player, coordinate.getName())) {
             player.sendMessage(ChatColor.RED + "Coordinate with name '" + coordinate.getName() + "' already exists.");
             return true;
         }
 
-        if(coordRepo.hasCoord(player, player.getLocation())) {
+        if (coordRepo.hasCoord(player, player.getLocation())) {
             player.sendMessage(ChatColor.RED + "There is already another coordinate at " + coordinate.getX() + " " + coordinate.getY() + " " + coordinate.getZ() + ".");
             return true;
         }
@@ -67,10 +62,9 @@ public class AddCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] strings) {
-        if(!(sender instanceof Player)) return new ArrayList<>();
-
-        if(strings.length == 1 && strings[0].length() == 0) return Collections.singletonList("<name>");
-        if(strings.length == 2 && strings[1].length() == 0) return Collections.singletonList("<description>");
-        return new ArrayList<>();
+        if (!(sender instanceof Player)) return Collections.emptyList();
+        if (strings.length == 1 && strings[0].length() == 0) return Collections.singletonList("<name>");
+        if (strings.length == 2 && strings[1].length() == 0) return Collections.singletonList("<description>");
+        return Collections.emptyList();
     }
 }
